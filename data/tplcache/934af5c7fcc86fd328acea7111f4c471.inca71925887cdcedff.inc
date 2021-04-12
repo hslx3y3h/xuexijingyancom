@@ -1,0 +1,44 @@
+<?php
+$z[0]=Array("sppage","",0,73);
+$z[0][4]=array();
+$z[0][4]['sptype']="full";
+$z[0][4]['srul']="1";
+$z[0][4]['erul']="5";
+$z[1]=Array("previewurl","https://www.gaokaotiku.com/forum.php?mod=viewthread&tid=650&extra=page%3D1",75,184);
+$z[1][4]=array();
+$z[2]=Array("keywordtrim","",186,223);
+$z[2][4]=array();
+$z[3]=Array("descriptiontrim","",225,270);
+$z[3][4]=array();
+$z[4]=Array("item","\r\n   {dede:match}<title>[内容]</title>{/dede:match}\r\n   \r\n   {dede:function}{/dede:function}\r\n",272,434);
+$z[4][4]=array();
+$z[4][4]['field']="title";
+$z[4][4]['value']="";
+$z[4][4]['isunit']="";
+$z[4][4]['isdown']="";
+$z[5]=Array("item","\r\n   {dede:match}{/dede:match}\r\n   \r\n   {dede:function}{/dede:function}\r\n",436,576);
+$z[5][4]=array();
+$z[5][4]['field']="writer";
+$z[5][4]['value']="";
+$z[5][4]['isunit']="";
+$z[5][4]['isdown']="";
+$z[6]=Array("item","\r\n   {dede:match}{/dede:match}\r\n   \r\n   {dede:function}{/dede:function}\r\n",578,718);
+$z[6][4]=array();
+$z[6][4]['field']="source";
+$z[6][4]['value']="";
+$z[6][4]['isunit']="";
+$z[6][4]['isdown']="";
+$z[7]=Array("item","\r\n   {dede:match}{/dede:match}\r\n   \r\n   {dede:function}@me=GetMkTime(@me);{/dede:function}\r\n",720,880);
+$z[7][4]=array();
+$z[7][4]['field']="pubdate";
+$z[7][4]['value']="";
+$z[7][4]['isunit']="";
+$z[7][4]['isdown']="";
+$z[8]=Array("item","\r\n   {dede:match}{/dede:match}\r\n   \r\n   {dede:function}{/dede:function}\r\n",882,1022);
+$z[8][4]=array();
+$z[8][4]['field']="body";
+$z[8][4]['value']="";
+$z[8][4]['isunit']="1";
+$z[8][4]['isdown']="1";
+
+?>

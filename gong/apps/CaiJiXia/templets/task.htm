@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $cfg_soft_lang; ?>">
+	<title>采集侠</title>
+	<link href="apps/CaiJiXia/style/cjx.css?2.9" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="apps/CaiJiXia/style/jquery.min.js?2.9"></script>
+	<script type="text/javascript" src="apps/CaiJiXia/style/dialog.js?2.9"></script>
+	<script type="text/javascript" src="apps/CaiJiXia/style/cjx.js?2.9"></script>
+
+</head>
+<body leftmargin='8' topmargin='8'>
+	<div style="height:5px; line-height:5px;"></div>
+	<form name="status" action="?ac=status" target="_self" method="post">
+		<input name="type" type="hidden" value="">
+		<table width="98%" border="0" cellpadding="3" cellspacing="1" align="center">
+			<tr> 
+				<td height="20"> 
+					<div class="breadcrumbs cl">
+						<div class="lt"><i>采集侠</i> 采集任务</div>
+						<div class="rt"><div><span id="cjxnew"></span></div ></div>
+					</div> 
+				</td>
+			</tr>
+			<tr> 
+				<td height="36" bgcolor="#EBEBEB"> 
+					<table width="100%" border="0" cellpadding="0" cellspacing="0">
+						<tr> 
+							<td>
+								<div style="float:right">
+									<a href="?ac=onekey" style="color:red;" onclick="return confirm('您确定要全部导入栏目的关键词作为采集词吗？')">[导入栏目关键词]</a>
+									<a href="javascript:void(0)" onClick="$.dialog({title:'关键词工具 <a href=http://www.dedeadmin.com/?p=1642 target=_blank><font color=red>选取建议</font></a>',content:'//www.caijixia.cn/?m=keyword&type=iframe',width:'1100px',height:'90%'});"><font color="red">[关键词工具]</font></a>
+									&nbsp;&nbsp;
+								</div>
+								<strong>&nbsp;采集任务：(仅支持 普通文章 模型的栏目)</strong>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<table width="98%" border="0" cellpadding="3" cellspacing="1" align="center">
+			<thead>
+				<tr align="center">
+					<td width="5%">栏目ID</td>
+					<td width="15%" align="left">栏目名称</td>
+					<td width="10%">是否开启</td>
+					<td width="60%">采集规则 【<a href="?ac=clearall" onClick="return confirm('你确定要清空所有栏目采集项目吗');" style="text-decoration:underline;">全部清空</a>】</td>
+					<td width="10%">速度限制(篇/小时)</td>
+				</tr>
+			</thead>
+			<tbody class="tasklist">
+				<?php
+				if(empty($kwtype))
+				{
+				?>
+				<tr align="center"><td colspan="6" height="200"><b><font color="red"> 无法找到 文章模型 的栏目，请您先<a href="catalog_add.php?listtype=all">添加栏目</a></font></b></td></tr>
+				<?php } else foreach($kwtype as $id => $cat) { ?>
+				<tr align="center">
+					<td align="center">
+						<?php if($cat['ispart']==0){ ?><label><input name="tid[]" value="<?php echo $cat['id']?>" type="checkbox"><?php echo str_pad($cat['id'],2,'0',STR_PAD_LEFT)?></label><?php } ?>
+					</td>
+					<td align="left">
+						<font color="#aaa"><?php echo $cat['step']?></font>
+						<a href="../plus/list.php?tid=<?php echo $cat['id']?>" target="_blank"><?php echo $cat['typename']?></a></td>
+						<td>
+							<?php if($cat['ispart']==0){
+							if(!empty($cat['keyword'])){
+							?>
+							<a href="?ac=status&type=<?php echo $cat['close']?>&tid=<?php echo $cat['id']?>"><?php echo $cat['close']==1?'<font color=red>已关闭</font>':'<font color=green>采集中</font>';?></a>
+							<?php } else { 	?>
+							--
+							<?php } } ?>
+						</td>
+						<td align="left">
+							<div style="position:relative;padding-right:150px;">
+								<?php if($cat['ispart']==0){ ?>
+								<?php echo $cat['keyword']?$cat['keyword']:'无规则';  ?>
+								<span style="position:absolute;top:0;right:0;line-height:34px;">
+									<a href="javascript:void(0)" onClick="Showdialog(<?php echo $cat['id']?>,<?php echo $cat['close']?>);"><b>[设置规则]</b></a>
+									<a href="?ac=export&id=<?php echo $cat['id']?>" target="_blank">[导出]</a>
+									<a href="?ac=import&id=<?php echo $cat['id']?>">[导入]</a>
+								</span>
+								<?php } ?>
+							</div>
+						</td>
+						<td>
+							<?php if($cat['ispart']==0){ ?>
+							<input name="tmax[<?php echo $cat['id']?>]" type="text" style="width:30px; text-align:center" value="<?php echo isset($tmax[$cat['id']])?$tmax[$cat['id']]:100; ?>">
+							<?php } ?>
+						</td>
+					</tr>
+					<?php } ?>
+				</tbody>
+				<tfoot>
+					<tr> 
+						<td height="24" colspan="6"> 
+							<input name="updatemax" type="submit" id="updatemax" style="float:right;" value="更新数量限制" class="cjxbtn" />
+							<a href="javascript:void(0)" class="cjxbtn" onClick='selall();' >全选</a>
+							<a href="javascript:void(0)" class="cjxbtn" onClick="noselall();" >取消</a>
+							<a href="javascript:void(0)" class="cjxbtn" onClick="closeall();">关闭</a>
+							<a href="javascript:void(0)" class="cjxbtn" onClick="openall();">开启</a>
+							<a href="javascript:void(0)" class="cjxbtn" onClick="coone();">测试单个栏目</a>
+							<script type="text/javascript">
+								function selall(){
+									$("input[name='tid\[\]']").attr('checked','checked');
+								}
+								function noselall(){
+									$("input[name='tid\[\]']").attr('checked',false);
+								}
+								function closeall(){
+									$("input[name='type']").val(0);
+									$('form[name=\'status\']').submit();	
+								}
+								function openall(){
+									$("input[name='type']").val(1);
+									$('form[name=\'status\']').submit();
+								}
+								function coone(){
+									var d = [];
+									$("input[name='tid\[\]']:checked").each(function(){
+										d.push($(this).val());
+									});
+									if(d.length==0){
+										$.dialog({title:null,content:"请您先选择要测试的栏目！",time:2000});
+										return false;
+									}
+									if(d.length>1){
+										$.dialog({title:null,content:"一次只能选择一个栏目！",time:2000});
+										return false;
+									}
+									if(d.length==1) statask(d[0]);
+								}
+							</script>
+						</td>
+					</tr>
+					<tr>
+						<td height="50px" colspan="6">
+							<a href="javascript:void(0)" onClick="statask(0);" class='cjxbtn cjxbtnBig cjxbtnGreen' id="stainput" data="0"> 采集 </a>
+							&nbsp;
+							<a href="?ac=delhash" onClick="return confirm('采集侠采集过的网址不会再采集，如果大量删除了文章又想重新采集，可以使用该功能，清除历史记录需要重新抓取采集过的url，会降低采集效率，您确定要清除吗？')">[清除历史记录]</a> 
+							<a href="?ac=testhttp">[环境测试]</a> 
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</form>
+		<div id="cjxprogress">
+			<div class='pgw'>
+				<div id='now'></div>
+			</div>
+			<span id="go">正在准备采集，请稍等...</span>
+			<div class="tips">测试采集为循环采集，循环检测所有采集规则内的网址，每次工作会继续上次采集工作，而全自动后台采集不会对已采集过的网址重复下载。</div>
+		</div>
+		<div class="autocaiji">
+			<dl class="cl">
+				<dt>全自动采集开关：</dt>
+				<dd>
+					<div class="turn "></div>
+					<span><a href="javascript:void(0)" onclick="$('#timesetting').toggle();">[高级设置<img src="apps/CaiJiXia/style/file_tt.gif" align="absmiddle" />]</a></span>
+				</dd>
+			</dl>
+		</div>
+		<div id="timesetting" style="display:none;">
+			<form action="?ac=cron" method="post">
+				<table width="98%" border="0" cellpadding="3" cellspacing="1" align="center">
+					<tr> 
+						<td height="20" colspan="3">
+							<table width="100%" border="0" cellpadding="0" cellspacing="0">
+								<tr> 
+									<td><strong>&nbsp;自动采集时间段</strong>（采集上限请在 <a href="?ac=setting" style="text-decoration:underline;">基本设置</a> 里设置）</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr> 
+						<td width="7%" colspan="3">
+							<div style="padding:10px">
+								<?php for($i=0;$i<=23;$i++){ ?>
+								<label><input name="cron[<?php echo $i ?>]" type="checkbox" value="<?php echo $i ?>" <?php echo isset($cron[$i])?'checked':'';?>><?php echo $i ?>点</label>
+								<?php if($i==11) echo "<br>" ?>
+								<?php } ?>
+							</div>
+						</td>
+					</tr>
+					<tr> 
+						<td height="24" colspan="3"> 
+							<table width="90%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td align="left" style="padding-left:10px;">
+										<input type="submit" value="保存设置" class="cjxbtn cjxbtnBig">
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+
+		<div class="cjxlog">
+			<fieldset>
+				<legend>采集记录</legend>
+				<div class="c cl cjxlogbox">
+				</div>
+			</fieldset>
+		</div>
+
+		<script>
+			if($("#timesetting input[type=checkbox]:checked").length==0){
+				$("#timesetting input[type=checkbox]").each(function(){
+					$(this).attr("checked", true);
+				})
+			}
+		</script>
+
+		<div id="footer" style="text-align:center; padding:10px;"></div>
+	</body>
+	</html>

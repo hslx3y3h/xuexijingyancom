@@ -1,0 +1,26 @@
+<header id="header-web">
+    <div class="header-main">
+        <hgroup class="logo">
+            <h1><a href="{dede:global.cfg_cmsurl/}/" title="{dede:global.cfg_webname/}" rel="home"><img src="/skin/Picture/logo.png" alt="{dede:global.cfg_description/}"></a></h1>
+<!--            <h3>互联网的运营笔记！</h3> -->
+        </hgroup>
+        <!--logo-->
+        <nav class="header-nav">
+            <ul id="menu-nav" class="menu">
+            
+            {dede:type typeid='51'}
+            <li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home"><a href="[field:typelink/]/">[field:typename/]</a></li>
+            {/dede:type}
+            
+            
+            
+			{dede:channel     row='6'   type ='top'}
+			<li class="menu-item menu-item-type-taxonomy menu-item-object-category"><a title="[field:typename/]" href="[field:typelink/]">[field:typename/]</a></li>
+            {/dede:channel}
+            </ul>
+			    </nav>
+        <!--header-nav-->
+
+        <!--header-main-->
+    </div>
+</header>

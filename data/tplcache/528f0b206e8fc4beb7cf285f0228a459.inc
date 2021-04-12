@@ -1,0 +1,1 @@
+<li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home"><a href="[field:typelink/]/">[field:typename/]</a></li>

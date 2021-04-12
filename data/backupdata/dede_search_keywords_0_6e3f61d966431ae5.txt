@@ -1,0 +1,7 @@
+INSERT INTO `dede_search_keywords` VALUES('1','广州','广州','2','0','1617329410','0','0');
+INSERT INTO `dede_search_keywords` VALUES('2','百度','百度','2','60','1617478056','0','0');
+INSERT INTO `dede_search_keywords` VALUES('3','1444','1444','1','0','1617477935','0','0');
+INSERT INTO `dede_search_keywords` VALUES('4','真题','真题','1','20','1617477953','0','0');
+INSERT INTO `dede_search_keywords` VALUES('5','高三','高三','1','1791','1617478075','0','0');
+INSERT INTO `dede_search_keywords` VALUES('6','china','china','1','0','1617478192','0','0');
+INSERT INTO `dede_search_keywords` VALUES('7','到底','到底','2','0','1617526289','0','0');
